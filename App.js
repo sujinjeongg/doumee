@@ -63,7 +63,7 @@ export default function App() {
 function HomeStackNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name='HomeScreen' component={Home} />
+      <Stack.Screen name='HomeScreen' component={Home} options={{headerShown: false}}/>
       <Stack.Screen name='Detail' component={Detail} />
     </Stack.Navigator>
   )
@@ -72,7 +72,7 @@ function HomeStackNavigator() {
 function LikeStackNavigator() {
   return (
     <Stack.Navigator>
-    <Stack.Screen name='LikeScreen' component={Like} />
+    <Stack.Screen name='LikeScreen' component={Like} options={{headerShown: false}}/>
     <Stack.Screen name='Detail' component={Detail} />
   </Stack.Navigator>
   );

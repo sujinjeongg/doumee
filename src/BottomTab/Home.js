@@ -7,7 +7,7 @@ const Home = () => {
     
     return (
         <View style={styles.container}>
-            <Text>Home</Text>
+            <Text>Main Page</Text>
             <Text
               onPress={() => navigation.navigate('Detail')}
             >Go to Detail screen</Text>

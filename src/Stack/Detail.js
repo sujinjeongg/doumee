@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     },
     headerRight: {
         flexDirection: 'row',
-        marginRight: 15,
+        marginRight: 10,
     },
     heartIcon: {
         width: 30,
@@ -135,9 +135,8 @@ const styles = StyleSheet.create({
         width: 260,
         height: 280,
         borderRadius: 15, // 둥근 모서리 적용
-        marginStart: 40,
-        marginRight: 5,
-        marginEnd: 40,
+        marginStart: 50,
+        marginHorizontal: -10,
     },
     locationContainer: {
         position: 'absolute',
@@ -162,7 +161,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginStart:18,
         marginEnd:18,
-        marginLeft: 23.3,
+        marginLeft: 23,
         paddingBottom: 6,
     },
     selectedMenu: {

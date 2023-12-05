@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 
 const Home = () => {
     const navigation = useNavigation()
+    
     return (
         <View style={styles.container}>
             <Text>Home</Text>

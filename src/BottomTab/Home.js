@@ -26,9 +26,9 @@ const Home = () => {
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
     ],
     Nightscape: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeonggu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daeagu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung' },
     ],
     Sights: [
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
@@ -36,9 +36,9 @@ const Home = () => {
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
     ],
     Mountain: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeonggu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung' },
     ],
     Ocean: [
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
@@ -46,9 +46,9 @@ const Home = () => {
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
     ],
     Forest: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeonggu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung' },
     ],
     Museum: [
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
@@ -56,9 +56,9 @@ const Home = () => {
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
     ],
     Monument: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeonggu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung' },
     ],
     Palace: [
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
@@ -66,9 +66,9 @@ const Home = () => {
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
     ],
     Painting: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeonggu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung' },
     ],
     Sculpture: [
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
@@ -76,9 +76,9 @@ const Home = () => {
       { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
     ],
     Installation: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeonggu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu' },
+      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung' },
     ],
   };
 

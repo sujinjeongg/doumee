@@ -10,14 +10,12 @@ const MyPlan = () => {
 
     return (
         <View style={styles.container}>
-          <View style={styles.header}>
-            <View style={styles.titleContainer}>
-              <View style={styles.iconContainer}>
-                <Icon name="location" size={30} color="white" />
-              </View>
-            <Text style={styles.mainTitle}>Busan</Text>
-        </View>
-        </View>
+          <View style={styles.titleContainer}>
+            <View style={styles.iconContainer}>
+              <Icon name="location" size={30} color="white" />
+            </View>
+            <Text style={styles.title}>Busan</Text>
+          </View>
         </View>
     )
 }
@@ -32,12 +30,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 20,
       paddingTop: 60,
     },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingBottom: 20,
-    },
     titleContainer: {
       flexDirection: 'row',
     },
@@ -51,44 +43,11 @@ const styles = StyleSheet.create({
       height: 50,
     },
     title: {
-      flexDirection: 'column',
       paddingLeft: 13,
-    },
-    mainTitle: {
-      fontSize: 22,
+      fontSize: 28,
       fontWeight: 'bold',
-    },
-    smallTitle: {
-      fontSize: 16,
-      color: 'grey',
-    },
-    box: {
-      flex: 1,
-      margin: 10,
-      height: 230,  
-      paddingTop: 10,
-      paddingHorizontal: 5,
-      backgroundColor: 'white',
-      borderRadius: 10,
-      alignItems: 'center',
-      position: 'relative',
-    },
-    image: {
-      width: '90%',
-      height: '60%',
-      resizeMode: 'cover',
-      borderRadius: 10,
-      padding: 10,
-    },
-    text: {
-      alignContent: 'flex-start',
-      width: '90%',
+      alignContent: 'center',
       paddingTop: 5,
-    },
-    icon: {
-      position: 'absolute',
-      bottom: 10,
-      right: 8,
     },
 });
   

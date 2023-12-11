@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Modal } from 'react-native'
+import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -16,6 +16,18 @@ const Like = () => {
 
   const navigation = useNavigation()
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalData, setModalData] = useState([]);
+
+  const handleOpenModal = () => {
+    setModalData(data.map(item => item.text));
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
     return (
         <View style={styles.container}>
           <View style={styles.header}>
@@ -28,7 +40,9 @@ const Like = () => {
                 <Text style={styles.smallTitle}>The places you like</Text>
               </View>
             </View>
-            <Icon name="list" size={40}/>
+            <TouchableOpacity onPress={handleOpenModal}>
+              <Icon name="list" size={40}/>
+            </TouchableOpacity>
           </View>
           <FlatList
             data={data}
@@ -44,6 +58,18 @@ const Like = () => {
                 </View>
               )}
           />
+          <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={handleCloseModal}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                {modalData.map((text, index) => (
+                  <Text style={styles.textStyle} key={index}>{text}</Text>
+                ))}
+                <TouchableOpacity style={styles.closeButton} onPress={handleCloseModal}>
+                  <Text style={styles.btnTextStyle}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
         </View>
     )
 }
@@ -114,6 +140,44 @@ const styles = StyleSheet.create({
       position: 'absolute',
       bottom: 10,
       right: 8,
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    textStyle: {
+      fontSize: 18,
+      marginBottom: 5,
+    },
+    closeButton: {
+      backgroundColor: "#2196F3",
+      borderRadius: 20,
+      padding: 8,
+      paddingHorizontal: 15,
+      elevation: 2,
+      marginTop: 30,
+    },
+    btnTextStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
     },
 });
   

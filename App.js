@@ -84,7 +84,7 @@ function MyStackNavigator() {
     <Stack.Navigator>
     <Stack.Screen name='MyScreen' component={My} options={{headerShown: false}} />
     <Stack.Screen name='Detail' component={Detail} />
-    <Stack.Screen name='MyPlan' component={MyPlan} />
+    <Stack.Screen name='MyPlan' component={MyPlan} options={{headerShown: false}}/>
     <Stack.Screen name="NewPost" component={NewPost} />
     <Stack.Screen name="Post1" component={Post1} />
     <Stack.Screen name="Post2" component={Post2} />

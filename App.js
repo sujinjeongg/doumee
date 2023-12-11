@@ -9,6 +9,7 @@ import Home from './src/BottomTab/Home';
 import Like from './src/BottomTab/Like';
 import My from './src/BottomTab/My';
 import Detail from './src/Stack/Detail';
+import MyPlan from './src/Stack/MyPlan';
 import NewPost from './src/Stack/NewPost';
 import Post1 from './src/Stack/Post1';
 import Post2 from './src/Stack/Post2';
@@ -83,6 +84,7 @@ function MyStackNavigator() {
     <Stack.Navigator>
     <Stack.Screen name='MyScreen' component={My} options={{headerShown: false}} />
     <Stack.Screen name='Detail' component={Detail} />
+    <Stack.Screen name='MyPlan' component={MyPlan} />
     <Stack.Screen name="NewPost" component={NewPost} />
     <Stack.Screen name="Post1" component={Post1} />
     <Stack.Screen name="Post2" component={Post2} />

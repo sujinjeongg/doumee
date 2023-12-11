@@ -33,10 +33,10 @@ const My = () => {
       </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.folderList}>
           {folders.map((folder, index) => (
-            <View key={index} style={styles.folderItem}>
+            <TouchableOpacity key={index} style={styles.folderItem} onPress={() => navigation.navigate('MyPlan')}>
               <Image source={folder.image} style={styles.folderImage} />
               <Text style={styles.folderInfo}>{`${folder.name} ${folder.items} items`}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
         <View style={styles.header}></View>

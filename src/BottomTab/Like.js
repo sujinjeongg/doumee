@@ -1,6 +1,8 @@
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native'
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+
 
 const data = [
     { id: '1', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Myeong-dong, Seoul' },
@@ -11,6 +13,9 @@ const data = [
 
 
 const Like = () => {
+
+  const navigation = useNavigation()
+
     return (
         <View style={styles.container}>
           <View style={styles.header}>
@@ -30,11 +35,14 @@ const Like = () => {
               numColumns={2}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (
-            <View style={styles.box}>
-              <Image source={{ uri: item.imageUrl }} style={styles.image} />
-              <Text>{item.text}</Text>
-            </View>
-            )}
+                <View style={styles.box}>
+                  <Image source={{ uri: item.imageUrl }} style={styles.image} />
+                  <Text style={styles.text} >{item.text}</Text>
+                  <TouchableOpacity onPress={() => navigation.navigate('Detail')} style={styles.icon}>
+                    <Icon name="chevron-forward" size={24} color="blue"/>
+                  </TouchableOpacity>
+                </View>
+              )}
           />
         </View>
     )
@@ -82,11 +90,13 @@ const styles = StyleSheet.create({
     box: {
       flex: 1,
       margin: 10,
-      height: 250,  
+      height: 230,  
+      paddingTop: 10,
+      paddingHorizontal: 5,
       backgroundColor: 'white',
       borderRadius: 10,
-      justifyContent: 'center',
       alignItems: 'center',
+      position: 'relative',
     },
     image: {
       width: '90%',
@@ -94,6 +104,16 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
       borderRadius: 10,
       padding: 10,
+    },
+    text: {
+      alignContent: 'flex-start',
+      width: '90%',
+      paddingTop: 5,
+    },
+    icon: {
+      position: 'absolute',
+      bottom: 10,
+      right: 8,
     },
 });
   

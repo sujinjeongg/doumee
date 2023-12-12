@@ -4,12 +4,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 
 
-const data = [
-    { id: '1', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Myeong-dong, Seoul' },
-    { id: '2', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Song-do, Incheon' },
-    { id: '3', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Haeundae, Busan' },
-    { id: '4', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Gyeongju' },
-  ];
 
 
 const Like = () => {
@@ -17,15 +11,23 @@ const Like = () => {
   const navigation = useNavigation()
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalData, setModalData] = useState([]);
+  const [data, setData] = useState([
+    { id: '1', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Myeong-dong, Seoul' },
+    { id: '2', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Song-do, Incheon' },
+    { id: '3', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Haeundae, Busan' },
+    { id: '4', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Gyeongju' },
+  ]);
 
   const handleOpenModal = () => {
-    setModalData(data.map(item => item.text));
     setModalVisible(true);
   };
 
   const handleCloseModal = () => {
     setModalVisible(false);
+  };
+
+  const handleDeleteItem = id => {
+    setData(data.filter(item => item.id !== id));
   };
 
     return (
@@ -61,19 +63,25 @@ const Like = () => {
           <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={handleCloseModal}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                {modalData.map((text, index) => (
-                  <Text style={styles.textStyle} key={index}>{text}</Text>
+                {data.map((item) => (
+                  <View style={styles.modalItem} key={item.id}>
+                    <Text style={styles.textStyle}>{item.text}</Text>
+                    <TouchableOpacity onPress={() => handleDeleteItem(item.id)}>
+                      <Icon name="trash-outline" size={24} color="red" />
+                    </TouchableOpacity>
+                  </View>
                 ))}
-                <TouchableOpacity style={styles.closeButton} onPress={handleCloseModal}>
-                  <Text style={styles.btnTextStyle}>Close</Text>
-                </TouchableOpacity>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity style={styles.closeButton} onPress={handleCloseModal}>
+                    <Text style={styles.btnTextStyle}>Close</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </Modal>
         </View>
     )
 }
-    
 
 
 export default Like
@@ -114,10 +122,10 @@ const styles = StyleSheet.create({
       color: 'grey',
     },
     box: {
-      flex: 1,
-      margin: 10,
+      width: '48%',
+      margin: '1%',
       height: 230,  
-      paddingTop: 10,
+      paddingTop: 13,
       paddingHorizontal: 5,
       backgroundColor: 'white',
       borderRadius: 10,
@@ -135,6 +143,7 @@ const styles = StyleSheet.create({
       alignContent: 'flex-start',
       width: '90%',
       paddingTop: 5,
+      fontSize: 16,
     },
     icon: {
       position: 'absolute',
@@ -152,7 +161,6 @@ const styles = StyleSheet.create({
       backgroundColor: "white",
       borderRadius: 20,
       padding: 35,
-      alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
@@ -162,9 +170,18 @@ const styles = StyleSheet.create({
       shadowRadius: 4,
       elevation: 5
     },
+    modalItem: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 10,
+    },
     textStyle: {
       fontSize: 18,
       marginBottom: 5,
+      marginRight: 10,
+    },
+    buttonContainer: {
+      alignItems: 'center',
     },
     closeButton: {
       backgroundColor: "#2196F3",
@@ -172,7 +189,7 @@ const styles = StyleSheet.create({
       padding: 8,
       paddingHorizontal: 15,
       elevation: 2,
-      marginTop: 30,
+      marginTop: 10,
     },
     btnTextStyle: {
       color: "white",

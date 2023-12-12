@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Modal, TextInput, Button } from 'react-native'
+import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,6 +7,34 @@ import { useNavigation } from '@react-navigation/native';
 const MyPlan = () => {
 
   const navigation = useNavigation()
+
+  const [plans, setPlans] = useState([
+    {id: '1', image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Jogging' , place:'Haeundae Beach'},
+    {id: '2', image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Eating Raw Fish' , place:'Gwangalli Waterfront Park'},
+    {id: '3', image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Watching late-night movies' , place:'The Busan Cinema Center'},
+    {id: '4', image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Enjoying food' , place:'Kkangtong Market'},
+    {id: '5', image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Taking pictures' , place:'Gamcheon Culture Village'},
+  ]);
+
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [editText, setEditText] = useState('');
+  const [editId, setEditId] = useState(null);
+
+  const handleOpenEditModal = (id, text) => {
+    setEditId(id);
+    setEditText(text);
+    setEditModalVisible(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setEditModalVisible(false);
+  };
+
+  const handleEditItem = () => {
+    setPlans(plans.map(item => item.id === editId ? {...item, text: editText} : item));
+    handleCloseEditModal();
+  };
+
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -26,13 +54,6 @@ const MyPlan = () => {
     });
   }, [navigation]);
 
-  const plans = [
-    {image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Jogging' , place:'Haeundae Beach'},
-    {image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Eating Raw Fish' , place:'Gwangalli Waterfront Park'},
-    {image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Watching late-night movies' , place:'The Busan Cinema Center'},
-    {image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Enjoying food' , place:'Kkangtong Market'},
-    {image:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' , text:'Taking pictures' , place:'Gamcheon Culture Village'},
-  ];
 
 
     return (
@@ -57,7 +78,9 @@ const MyPlan = () => {
                 </View>
                 </View>
                 <View style={styles.boxIconContainer}>
-                  <Icon name="create" style={styles.create} size={24} color="darkgrey"/>
+                  <TouchableOpacity onPress={() => handleOpenEditModal(plan.id, plan.text)}>
+                    <Icon name="create" style={styles.create} size={24} color="darkgrey"/>
+                  </TouchableOpacity>
                   <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
                     <Icon name="chevron-forward" size={24} color="blue" />
                   </TouchableOpacity>
@@ -65,6 +88,18 @@ const MyPlan = () => {
               </View>
             ))}
           </View>
+          <Modal animationType="slide" transparent={true} visible={editModalVisible} onRequestClose={handleCloseEditModal}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <TextInput
+                  value={editText}
+                  onChangeText={text => setEditText(text)}
+                />
+                <Button onPress={handleEditItem} title="Confirm" />
+                <Button onPress={handleCloseEditModal} title="Cancel" />
+              </View>
+            </View>
+          </Modal>
         </View>
     )
 }
@@ -143,5 +178,35 @@ const styles = StyleSheet.create({
     create: {
       marginBottom: 20,
     },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    modalText: {
+      marginBottom: 10,
+      textAlign: "center"
+    },
+    modalButtons: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '100%',
+    }
 });
   

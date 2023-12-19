@@ -58,11 +58,11 @@ const MyPlan = () => {
 
 
 
-  const handleDeleteItem = id => {
+  const handleDeletePlan = id => {
     setPlans(plans.filter(item => item.id !== id));
   };
 
-  const handleLongPressItem = id => {
+  const handleLongPressPlan = id => {
     Alert.alert(
       "Delete",
       "Are you sure you want to delete this item?",
@@ -71,7 +71,7 @@ const MyPlan = () => {
           text: "cancel",
           style: "cancel"
         },
-        { text: "confirm", onPress: () => handleDeleteItem(id) }
+        { text: "confirm", onPress: () => handleDeletePlan(id) }
       ]
     );
   };
@@ -86,7 +86,7 @@ const MyPlan = () => {
           </View>
           <View style={styles.planContainer}>
             {plans.map((plan, index) => (
-              <TouchableOpacity key={index} onLongPress={() => handleLongPressItem(plan.id)} style={styles.box}>
+              <TouchableOpacity key={index} onLongPress={() => handleLongPressPlan(plan.id)} style={styles.box}>
                 <View style={styles.boxLeft}>
                 <Image source={{ uri: plan.image }} style={styles.boxImage} />
                 <View style={styles.textContainer}>

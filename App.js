@@ -16,6 +16,7 @@ import Post2 from './src/Stack/Post2';
 import Post3 from './src/Stack/Post3';
 import Post4 from './src/Stack/Post4';
 import Post5 from './src/Stack/Post5';
+import Search from './src/Stack/Search';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -66,6 +67,7 @@ function HomeStackNavigator() {
     <Stack.Navigator>
       <Stack.Screen name='HomeScreen' component={Home} options={{headerShown: false}}/>
       <Stack.Screen name='Detail' component={Detail} />
+      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   )
 }

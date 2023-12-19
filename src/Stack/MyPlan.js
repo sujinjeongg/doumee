@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, Modal, TextInput, Button } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Modal, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native-paper';
+import { Alert } from 'react-native';
 
 
 const MyPlan = () => {
@@ -56,6 +58,24 @@ const MyPlan = () => {
 
 
 
+  const handleDeleteItem = id => {
+    setPlans(plans.filter(item => item.id !== id));
+  };
+
+  const handleLongPressItem = id => {
+    Alert.alert(
+      "Delete",
+      "Are you sure you want to delete this item?",
+      [
+        {
+          text: "cancel",
+          style: "cancel"
+        },
+        { text: "confirm", onPress: () => handleDeleteItem(id) }
+      ]
+    );
+  };
+
     return (
         <View style={styles.container}>
           <View style={styles.titleContainer}>
@@ -66,7 +86,7 @@ const MyPlan = () => {
           </View>
           <View style={styles.planContainer}>
             {plans.map((plan, index) => (
-              <View key={index} style={styles.box}>
+              <TouchableOpacity key={index} onLongPress={() => handleLongPressItem(plan.id)} style={styles.box}>
                 <View style={styles.boxLeft}>
                 <Image source={{ uri: plan.image }} style={styles.boxImage} />
                 <View style={styles.textContainer}>
@@ -85,20 +105,18 @@ const MyPlan = () => {
                     <Icon name="chevron-forward" size={24} color="blue" />
                   </TouchableOpacity>
                 </View>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
           <Modal animationType="slide" transparent={true} visible={editModalVisible} onRequestClose={handleCloseEditModal}>
-            <View style={styles.centeredView}>
+            <TouchableOpacity style={styles.centeredView} activeOpacity={1} onPressOut={handleCloseEditModal}>
               <View style={styles.modalView}>
-                <TextInput
-                  value={editText}
-                  onChangeText={text => setEditText(text)}
-                />
-                <Button onPress={handleEditItem} title="Confirm" />
-                <Button onPress={handleCloseEditModal} title="Cancel" />
+                <TextInput value={editText} onChangeText={text => setEditText(text)} style={styles.textInput}/>
+                <Button onPress={handleEditItem} mode="contained" style={styles.modalbtn}>
+                  Confirm
+                </Button>
               </View>
-            </View>
+            </TouchableOpacity>
           </Modal>
         </View>
     )
@@ -197,16 +215,22 @@ const styles = StyleSheet.create({
       },
       shadowOpacity: 0.25,
       shadowRadius: 4,
-      elevation: 5
+      elevation: 5,
+      width: '60%',
     },
-    modalText: {
-      marginBottom: 10,
-      textAlign: "center"
-    },
-    modalButtons: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+    textInput: {
+      borderColor: '#d3d3d3',
+      borderWidth: 1.5,
+      borderRadius: 5,
+      fontSize: 18,
       width: '100%',
+      padding: 10,
+      margin: 10,
+      marginBottom: 20,
+    },
+    modalbtn: {
+      borderRadius: 15,
+      backgroundColor: 'skyblue'
     }
 });
   

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native'
@@ -6,16 +6,6 @@ import { useNavigation } from '@react-navigation/native'
 
 const Home = () => {
   const navigation = useNavigation()
-
-  const [searchModalVisible, setSearchModalVisible] = useState(false);
-
-  const handleOpenSearchModal = () => {
-    setSearchModalVisible(true);
-  };
-
-  const handleCloseSearchModal = () => {
-    setSearchModalVisible(false);
-  };
     
   const images = [
     'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZED8MXx8fGVufDB8fHx8fA%3D%3D',
@@ -140,16 +130,9 @@ const Home = () => {
             <Text style={styles.title}>Where do you want to</Text>
             <Text style={styles.title}>travel?</Text>
           </View>
-          <TouchableOpacity onPress={handleOpenSearchModal}>
+          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
             <Icon name="search" size={30} />
           </TouchableOpacity>
-          <Modal animationType="slide" transparent={true} visible={searchModalVisible} onRequestClose={handleCloseSearchModal}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <TextInput style={styles.modalText} placeholder="Search here..."/>
-              </View>
-            </View>
-          </Modal>
         </View>
         <View style={styles.imageContainer}>
           <ScrollView ref={scrollViewRef} horizontal={true}>
@@ -238,31 +221,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 60,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center"
   },
   imageContainer: {
     width: '100%',

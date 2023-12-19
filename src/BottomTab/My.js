@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
   },
   postText: {
     fontSize: 13,
-   
+    textAlign: 'center'
   },
 });
 

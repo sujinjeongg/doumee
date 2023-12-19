@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Modal } from
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
-
+import { Alert } from 'react-native';
 
 
 
@@ -10,7 +10,6 @@ const Like = () => {
 
   const navigation = useNavigation()
 
-  const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState([
     { id: '1', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Myeong-dong, Seoul' },
     { id: '2', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Song-do, Incheon' },
@@ -18,67 +17,48 @@ const Like = () => {
     { id: '4', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Gyeongju' },
   ]);
 
-  const handleOpenModal = () => {
-    setModalVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalVisible(false);
-  };
-
   const handleDeleteItem = id => {
     setData(data.filter(item => item.id !== id));
+  };
+
+  const handleLongPressItem = id => {
+    Alert.alert(
+      "Delete",
+      "Are you sure you want to delete this item?",
+      [
+        {
+          text: "cancel",
+          style: "cancel"
+        },
+        { text: "confirm", onPress: () => handleDeleteItem(id) }
+      ]
+    );
   };
 
     return (
         <View style={styles.container}>
           <View style={styles.header}>
-            <View style={styles.titleContainer}>
-              <View style={styles.iconContainer}>
-                <Icon name="heart" size={30} color="white" />
-              </View>
-              <View style={styles.title}>
-                <Text style={styles.mainTitle}>Like</Text>
-                <Text style={styles.smallTitle}>The places you like</Text>
-              </View>
+            <View style={styles.iconContainer}>
+              <Icon name="heart" size={30} color="white" />
             </View>
-            <TouchableOpacity onPress={handleOpenModal}>
-              <Icon name="list" size={40}/>
-            </TouchableOpacity>
+            <View style={styles.title}>
+              <Text style={styles.mainTitle}>Like</Text>
+              <Text style={styles.smallTitle}>The places you like</Text>
+            </View>
           </View>
-          <FlatList
-            data={data}
-              numColumns={2}
-              keyExtractor={item => item.id}
+          <View style={styles.boxContainer}>
+            <FlatList data={data} numColumns={2} keyExtractor={item => item.id}
               renderItem={({ item }) => (
-                <View style={styles.box}>
+              <TouchableOpacity onLongPress={() => handleLongPressItem(item.id)}  style={styles.box}>
                   <Image source={{ uri: item.imageUrl }} style={styles.image} />
-                  <Text style={styles.text} >{item.text}</Text>
+                  <Text style={styles.text}>{item.text}</Text>
                   <TouchableOpacity onPress={() => navigation.navigate('Detail')} style={styles.icon}>
                     <Icon name="chevron-forward" size={24} color="blue"/>
                   </TouchableOpacity>
-                </View>
+              </TouchableOpacity>
               )}
-          />
-          <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={handleCloseModal}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                {data.map((item) => (
-                  <View style={styles.modalItem} key={item.id}>
-                    <Text style={styles.textStyle}>{item.text}</Text>
-                    <TouchableOpacity onPress={() => handleDeleteItem(item.id)}>
-                      <Icon name="trash-outline" size={24} color="red" />
-                    </TouchableOpacity>
-                  </View>
-                ))}
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity style={styles.closeButton} onPress={handleCloseModal}>
-                    <Text style={styles.btnTextStyle}>Close</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </Modal>
+            />
+          </View>
         </View>
     )
 }
@@ -93,12 +73,8 @@ const styles = StyleSheet.create({
     },
     header: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
       paddingBottom: 20,
-    },
-    titleContainer: {
-      flexDirection: 'row',
     },
     iconContainer: {
       marginLeft: 10,
@@ -122,15 +98,14 @@ const styles = StyleSheet.create({
       color: 'grey',
     },
     box: {
-      width: '48%',
-      margin: '1%',
+      width: '46%',
       height: 230,  
       paddingTop: 13,
-      paddingHorizontal: 5,
       backgroundColor: 'white',
       borderRadius: 10,
       alignItems: 'center',
       position: 'relative',
+      margin: '2%',
     },
     image: {
       width: '90%',
@@ -149,52 +124,6 @@ const styles = StyleSheet.create({
       position: 'absolute',
       bottom: 10,
       right: 8,
-    },
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
-    },
-    modalView: {
-      margin: 20,
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    modalItem: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginBottom: 10,
-    },
-    textStyle: {
-      fontSize: 18,
-      marginBottom: 5,
-      marginRight: 10,
-    },
-    buttonContainer: {
-      alignItems: 'center',
-    },
-    closeButton: {
-      backgroundColor: "#2196F3",
-      borderRadius: 20,
-      padding: 8,
-      paddingHorizontal: 15,
-      elevation: 2,
-      marginTop: 10,
-    },
-    btnTextStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
     },
 });
   

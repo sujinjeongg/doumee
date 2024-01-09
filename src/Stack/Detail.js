@@ -9,6 +9,7 @@ const Detail = () => {
     const [isLiked, setIsLiked] = useState(false)
     const navigation = useNavigation()
     const [selectedMenu, setSelectedMenu] = useState('Details'); //초기에는 'Details'
+    const [apiResponse, setApiResponse] = useState({}); // API 응답을 저장할 상태
 
     const toggleLike = () => {
         setIsLiked(!isLiked)
@@ -47,23 +48,64 @@ const Detail = () => {
         if (selectedMenu === 'Details') {
             return (
                 <View style={styles.content}>
-                <Text>Details Content</Text>
+                <Text>{'Address: ${apiResponse.addr1}'}</Text>
                 </View>
             )
         } else if (selectedMenu === 'Information') {
             return (
                 <View style={styles.content}>
-                    <Text>Information Content</Text>
+                    <Text>{'Tel: ${apiResponse.tel}'}</Text>
                 </View>
             )
         } else if (selectedMenu === 'Restaurant') {
             return (
                 <View style={styles.content}>
-                    <Text>Restaurant Content</Text>
+                    <Text>{'Restaurant Name: ${apiResponse.title}'}</Text>
                 </View>
             )
         }
     }
+
+    //api
+const fetchTouristInfo = async (menu) => {
+    const apiKey = 'n2/FPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69+gM7AIokqvH6opUKYrGg==';
+    let apiUrl = '';
+  
+    if (menu === 'Details') {
+      apiUrl = 'https://apis.data.go.kr/B551011/EngService1/areaBasedList1?MobileOS=AND&MobileApp=doumee&serviceKey=n2%2FFPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69%2BgM7AIokqvH6opUKYrGg%3D%3D'; 
+    } else if (menu === 'Information') {
+      apiUrl = 'https://apis.data.go.kr/B551011/EngService1/searchStay1?MobileOS=AND&MobileApp=doumee&serviceKey=n2%2FFPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69%2BgM7AIokqvH6opUKYrGg%3D%3D'; //api 응답에 정보가 안 떠서 일단 숙박 정보 url 사용
+    } else if (menu === 'Restaurant') {
+      apiUrl = 'https://apis.data.go.kr/B551011/EngService1/searchStay1?MobileOS=AND&MobileApp=doumee&serviceKey=n2%2FFPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69%2BgM7AIokqvH6opUKYrGg%3D%3D'; // 맛집이 없어서 일단 숙박 정보로 대체
+    }
+    
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`, // API 인증에 필요한 경우
+        },
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        setApiResponse(data); // API 응답을 상태에 저장
+    
+        console.log(data);
+      } else {
+        throw new Error('Network response was not ok.');
+      }
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
+  };
+  
+  // Detail 컴포넌트 내에서 선택된 메뉴에 따라 API 호출
+  const handleMenuSelection = (selectedMenu) => {
+    fetchTouristInfo(selectedMenu);
+  };  
+
     return (
         <View style={styles.container}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>

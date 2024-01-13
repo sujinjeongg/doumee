@@ -6,11 +6,11 @@ import axios from 'axios'
 
 const Home = () => {
   const navigation = useNavigation()
-  const [selectedCategory, setSelectedCategory] = useState(null);
+const [selectedCategory, setSelectedCategory] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [list, setList] = useState([]);
-
+    
   const images = [
     'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZED8MXx8fGVufDB8fHx8fA%3D%3D',
     'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww',
@@ -19,8 +19,8 @@ const Home = () => {
   ];
 
   const scrollViewRef = useRef(null);
-  let scrollPosition = 0;  
-  let imageWidth = 350;  
+  let scrollPosition = 0;
+  let imageWidth = 350;
   
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -35,7 +35,7 @@ const Home = () => {
   
     return () => clearInterval(intervalId);  // 컴포넌트가 언마운트될 때 타이머를 제거합니다.
   }, []);
-
+  
   const categories = {
     CITY: ['Street', 'Building', 'Tower'],
     NATURE: ['Mountain', 'Beach', 'Forest'],
@@ -45,27 +45,32 @@ const Home = () => {
 
   // API
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      // API 호출
-      const response = await axios.get(
-        `http://apis.data.go.kr/B551011/EngService1/searchKeyword1?ServiceKey=n2%2FFPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69%2BgM7AIokqvH6opUKYrGg%3D%3D&arrange=O&contentTypeId=76&keyword=${selectedSubCategory}&MobileOS=AND&MobileApp=doumee&_type=json`
-      );
+    const fetchData = async () => {
+      try {
+        // API 호출
+        const response = await axios.get(
+          `http://apis.data.go.kr/B551011/EngService1/searchKeyword1?ServiceKey=n2%2FFPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69%2BgM7AIokqvH6opUKYrGg%3D%3D&arrange=O&contentTypeId=76&keyword=${selectedSubCategory}&MobileOS=AND&MobileApp=doumee&_type=json`
+        );
 
-      // 받아온 데이터를 사용하여 이미지와 텍스트를 설정
-      const newData = response.data.response.body.items.item.map((item) => ({
-        imageUrl: item.firstimage,
-        title: item.title,
-      }));
+        // 받아온 데이터를 사용하여 이미지와 텍스트를 설정
+        const items = response.data.response.body.items.item;
+        if (items) {  // items가 존재하면 map 함수를 실행
+          const newData = items.map((item) => ({
+            imageUrl: item.firstimage || 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZED8MXx8fGVufDB8fHx8fA%3D%3D',
+            title: item.title.replace(/\(.*\)/, ''),
+          }));
 
-      setList(newData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+          setList(newData);
+        } else {
+          console.log('No items found');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-  fetchData();
-}, [selectedSubCategory]);
+    fetchData();
+  }, [selectedSubCategory]);
 
   const Button = ({ title, onSelect, selected, isSubCategory }) => {
     return (
@@ -135,7 +140,7 @@ const Home = () => {
             </View>
           )}
         </View>
-        
+
         {selectedSubCategory && (
           <ScrollView style={styles.listContainer}>
             {list.map((item, index) => (
@@ -209,7 +214,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   selectedButton: {
-    backgroundColor: '#007BFF', 
+    backgroundColor: '#007BFF',
   },
   subSelectedButton: {
     backgroundColor: 'lightblue',
@@ -237,6 +242,7 @@ const styles = StyleSheet.create({
   },
   listText: {
     marginTop: 5,
+    marginRight: 10,
     flex:1,
   },
   listItemImage: {

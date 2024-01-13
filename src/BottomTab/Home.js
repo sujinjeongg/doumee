@@ -6,35 +6,53 @@ import axios from 'axios'
 
 const Home = () => {
   const navigation = useNavigation()
-const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [list, setList] = useState([]);
     
-  const images = [
-    'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZED8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww',
-    'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZED8MXx8fGVufDB8fHx8fA%3D%3D',
-    'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww',
-  ];
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://apis.data.go.kr/B551011/EngService1/areaBasedList1?ServiceKey=Z9i%2FG23AAyO%2FKACx3%2FCqrazOIGPcsirEV5BX8bIGu%2BXobx%2FutIU%2B91xpvHGOsN6t1M0YYdRVTSeK%2FTw68VZMCg%3D%3D&MobileOS=ETC&MobileApp=TestApp&_type=json`
+        );
+
+        const items = response.data.response.body.items.item;
+        if (items) {  
+          let imagesArr = items.map(item => item.firstimage).filter(image => image !== null && image.trim() !== ''); // null이거나 빈 문자열인 이미지 제거
+          imagesArr.sort(() => Math.random() - 0.5);
+          const selectedImages = imagesArr.slice(0, 4);
+          setImages(selectedImages);
+        } else {
+          console.log('No items found');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const scrollViewRef = useRef(null);
-  let scrollPosition = 0;
+  const scrollPositionRef = useRef(0);
   let imageWidth = 350;
   
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (scrollPosition >= images.length * imageWidth) {
-        // 스크롤 위치가 마지막 이미지를 넘어갔을 때, 스크롤 위치를 처음으로 돌립니다.
-        scrollPosition = 0;
+      if (scrollPositionRef.current >= images.length * imageWidth) {
+        scrollPositionRef.current = 0;
       }
       
-      scrollViewRef.current.scrollTo({ x: scrollPosition, animated: true });
-      scrollPosition += imageWidth;  // 스크롤 위치를 이미지 한 장의 너비만큼 이동합니다.
-    }, 3000);  // 3초마다 스크롤 위치를 조정합니다.
+      scrollViewRef.current.scrollTo({ x: scrollPositionRef.current, animated: true });
+      scrollPositionRef.current += imageWidth;
+    }, 3000);
   
-    return () => clearInterval(intervalId);  // 컴포넌트가 언마운트될 때 타이머를 제거합니다.
-  }, []);
+    return () => clearInterval(intervalId);
+  }, [images.length]);
   
   const categories = {
     CITY: ['Street', 'Building', 'Tower'],

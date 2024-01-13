@@ -1,12 +1,16 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView} from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native'
-
+import axios from 'axios'
 
 const Home = () => {
   const navigation = useNavigation()
-    
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [subCategories, setSubCategories] = useState([]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [list, setList] = useState([]);
+
   const images = [
     'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZED8MXx8fGVufDB8fHx8fA%3D%3D',
     'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww',
@@ -15,8 +19,8 @@ const Home = () => {
   ];
 
   const scrollViewRef = useRef(null);
-  let scrollPosition = 0;  // 스크롤 위치를 저장하는 변수를 추가합니다.
-  let imageWidth = 350;  // 이미지의 너비를 설정하세요.
+  let scrollPosition = 0;  
+  let imageWidth = 350;  
   
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -31,83 +35,37 @@ const Home = () => {
   
     return () => clearInterval(intervalId);  // 컴포넌트가 언마운트될 때 타이머를 제거합니다.
   }, []);
-  
-
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [subCategories, setSubCategories] = useState([]);
 
   const categories = {
-    CITY: ['Shopping', 'Nightscape', 'Sights'],
-    NATURE: ['Mountain', 'Ocean', 'Forest'],
-    HISTORY: ['Museum', 'Monument', 'Palace'],
-    ART: ['Painting', 'Sculpture', 'Installation'],
+    CITY: ['Street', 'Building', 'Tower'],
+    NATURE: ['Mountain', 'Beach', 'Forest'],
+    HISTORY: ['Museum', 'Monument', 'Statue'],
+    CULTURE: ['Sports', 'Music', 'Art'],
   };
 
-  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-  const [list, setList] = useState([]);
+  // API
+  useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // API 호출
+      const response = await axios.get(
+        `http://apis.data.go.kr/B551011/EngService1/searchKeyword1?ServiceKey=n2%2FFPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69%2BgM7AIokqvH6opUKYrGg%3D%3D&arrange=O&contentTypeId=76&keyword=${selectedSubCategory}&MobileOS=AND&MobileApp=doumee&_type=json`
+      );
 
-  const listItems = {
-    Shopping: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan', intro: 'The best summer resort' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul', intro: 'Mecaa of Shopping' },
-    ],
-    Nightscape: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeongju', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu', intro: 'Mecaa of Shopping' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung', intro: 'The best summer resort' },
-    ],
-    Sights: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan', intro: 'The best summer resort' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul', intro: 'Mecaa of Shopping' },
-    ],
-    Mountain: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeongju', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu', intro: 'The best summer resort' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung', intro: 'Mecaa of Shopping' },
-    ],
-    Ocean: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan', intro: 'The best summer resort' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul', intro: 'Mecaa of Shopping' },
-    ],
-    Forest: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeongju', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu', intro: 'Mecaa of Shopping' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung', intro: 'The best summer resort' },
-    ],
-    Museum: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan', intro: 'The best summer resort'},
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul', intro: 'Mecaa of Shopping' },
-    ],
-    Monument: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeongju', intro: 'Mecaa of Shopping' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung', intro: 'The best summer resort' },
-    ],
-    Palace: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan', intro: 'The best summer resort' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul', intro: 'Mecaa of Shopping' },
-    ],
-    Painting: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeongju', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu', intro: 'The best summer resort' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung', intro: 'Mecaa of Shopping' },
-    ],
-    Sculpture: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Song-do, Incheon', intro: 'Mecaa of Shopping' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Haeundae, Busan', intro: 'The best summer resort' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Myeong-dong, Seoul', intro: 'International City' },
-    ],
-    Installation: [
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gyeongju', intro: 'Mecaa of Shopping' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Daegu', intro: 'International City' },
-      { imageUrl: 'https://plus.unsplash.com/premium_photo-1678379473620-db6bc7ff8a11?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8JUVBJUIxJUI0JUVCJUFDJUJDfGVufDB8fDB8fHww', text: 'Gangreung', intro: 'The best summer resort' },
-    ],
+      // 받아온 데이터를 사용하여 이미지와 텍스트를 설정
+      const newData = response.data.response.body.items.item.map((item) => ({
+        imageUrl: item.firstimage,
+        title: item.title,
+      }));
+
+      setList(newData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
+
+  fetchData();
+}, [selectedSubCategory]);
 
   const Button = ({ title, onSelect, selected, isSubCategory }) => {
     return (
@@ -121,8 +79,6 @@ const Home = () => {
   };
 
   const [selectedItems, setSelectedItems] = useState({});
-
-
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -134,6 +90,7 @@ const Home = () => {
             <Icon name="search" size={30} />
           </TouchableOpacity>
         </View>
+
         <View style={styles.imageContainer}>
           <ScrollView ref={scrollViewRef} horizontal={true}>
             {images.map((image, index) => (
@@ -143,6 +100,7 @@ const Home = () => {
             ))}
           </ScrollView>
         </View>
+
         <View style={styles.categoryContainer}>
           <Text style={styles.title}>Category</Text>
           <View style={styles.buttonContainer}>
@@ -159,6 +117,7 @@ const Home = () => {
               />
             ))}
           </View>
+
           {selectedCategory && (
             <View style={styles.buttonContainer}>
               {subCategories.map((subCategory) => (
@@ -167,7 +126,7 @@ const Home = () => {
                 title={subCategory} 
                 onSelect={(title) => {
                   setSelectedSubCategory(title);
-                  setList(listItems[title]);
+                  setList(list);
                 }}
                 selected={selectedSubCategory === subCategory}
                 isSubCategory={true}  // SubCategory에 대한 버튼이므로 true로 설정
@@ -176,9 +135,10 @@ const Home = () => {
             </View>
           )}
         </View>
+        
         {selectedSubCategory && (
           <ScrollView style={styles.listContainer}>
-            {listItems[selectedSubCategory].map((item, index) => (
+            {list.map((item, index) => (
               <TouchableOpacity 
                 key={index} 
                 style={styles.listItem} 
@@ -187,11 +147,12 @@ const Home = () => {
                 <View style={styles.listInfo}>
                   <Image source={{ uri: item.imageUrl }} style={styles.listItemImage} />
                   <View style={styles.listText}>
-                    <Text>{item.text}</Text>
-                    <Text style={{color: 'blue'}}>{item.intro}</Text>
+                    <Text>{item.title}</Text>
                   </View>
                 </View>
-                <TouchableOpacity onPress={() => setSelectedItems(prevState => ({ ...prevState, [index]: !prevState[index] }))}>
+                <TouchableOpacity 
+                style={[styles.heartIcon, { marginLeft: -18 }]}
+                onPress={() => setSelectedItems(prevState => ({ ...prevState, [index]: !prevState[index] }))}>
                   <Icon name={selectedItems[index] ? 'heart' : 'heart-outline'} size={20} color="red" />
                 </TouchableOpacity>
               </TouchableOpacity>
@@ -203,6 +164,7 @@ const Home = () => {
 }
 
 export default Home
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -243,14 +205,15 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'lightgrey',
     padding: 8,
-    paddingHorizontal: 15,
+    paddingHorizontal: 13,
     borderRadius: 20,
   },
   selectedButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#007BFF', 
   },
   subSelectedButton: {
     backgroundColor: 'lightblue',
+    marginHorizontal: 10,
   },
   buttonText: {
     color: 'white',
@@ -274,6 +237,7 @@ const styles = StyleSheet.create({
   },
   listText: {
     marginTop: 5,
+    flex:1,
   },
   listItemImage: {
     width: 50,

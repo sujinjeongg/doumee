@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    top: -95,
+    top: -155,
   },
   recordText: {
     fontWeight: 'bold',
@@ -263,13 +263,13 @@ const styles = StyleSheet.create({
   },
   postList: {
     flex: 1,
-    top: -120,
-    marginTop: 10,
-    marginBottom: 10,
+    top: -190,
+    marginTop: 40,
+    marginBottom: -180,
   },
   postListContent: {
-     top: -180,
-     paddingBottom: 170,
+     top: -200,
+     paddingBottom: 190,
   },
   postContainer: { 
     top: 180,
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   },
   postImage: {
     width: 300,
-    height: 200,
+    height: 180,
     borderRadius: 15,
     marginBottom: 20,
   },

@@ -12,7 +12,7 @@ const Search = () => {
 
     const searchKeyword = async () => {
         try {
-            const response = await axios.get(`https://apis.data.go.kr/B551011/EngService1/searchKeyword1?MobileOS=AND&MobileApp=doumee&keyword=Seoul&serviceKey=n2%252FFPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69%252BgM7AIokqvH6opUKYrGg%253D%253D`);
+            const response = await axios.get(`http://apis.data.go.kr/B551011/EngService1/searchKeyword1?ServiceKey=Z9i%2FG23AAyO%2FKACx3%2FCqrazOIGPcsirEV5BX8bIGu%2BXobx%2FutIU%2B91xpvHGOsN6t1M0YYdRVTSeK%2FTw68VZMCg%3D%3D&keyword=${searchText}&MobileOS=ETC&MobileApp=TestApp&_type=json`);
 
             console.log(response.data);
             setResults(response.data.response.body.items.item);
@@ -22,17 +22,6 @@ const Search = () => {
         }
     };
 
-   const renderResult = ({item}) => {
-      return (
-        <View style={styles.resultContainer}>
-            {item.firstimage ? <Image source={{uri: item.firstimage}} style={styles.image}/> : null}
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.text}>Address: {item.addr1}</Text>
-
-        </View>
-      );
-    };
-    
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerTransparent: true,
@@ -52,7 +41,16 @@ const Search = () => {
         });
     }, [navigation, searchText]);
 
- 
+    const renderResult = ({item}) => {
+      return (
+        <View style={styles.resultContainer}>
+            {item.firstimage ? <Image source={{uri: item.firstimage}} style={styles.image}/> : null}
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.text}>Address: {item.addr1}</Text>
+
+        </View>
+      );
+    };
 
 
     return (

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView} from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native'
+import Icon from 'react-native-vector-icons/Ionicons';
 import axios from 'axios'
 
 const Home = () => {
@@ -10,9 +10,9 @@ const Home = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [list, setList] = useState([]);
-    
   const [images, setImages] = useState([]);
 
+  // 랜덤 대표 사진 API
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,7 +39,7 @@ const Home = () => {
 
   const scrollViewRef = useRef(null);
   const scrollPositionRef = useRef(0);
-  let imageWidth = 350;
+  let imageWidth = 320;
   
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -61,7 +61,7 @@ const Home = () => {
     CULTURE: ['Sports', 'Music', 'Art'],
   };
 
-  // API
+  // Category List API
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -74,7 +74,7 @@ const Home = () => {
         const items = response.data.response.body.items.item;
         if (items) {  // items가 존재하면 map 함수를 실행
           const newData = items.map((item) => ({
-            imageUrl: item.firstimage || 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZED8MXx8fGVufDB8fHx8fA%3D%3D',
+            listItemImage: item.firstimage || 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZED8MXx8fGVufDB8fHx8fA%3D%3D',
             title: item.title.replace(/\(.*\)/, ''),
           }));
 
@@ -165,10 +165,10 @@ const Home = () => {
               <TouchableOpacity 
                 key={index} 
                 style={styles.listItem} 
-                onPress={() => navigation.navigate('Detail')}
+                onPress={() => navigation.navigate('Detail', { location: item.title})}
               >
                 <View style={styles.listInfo}>
-                  <Image source={{ uri: item.imageUrl }} style={styles.listItemImage} />
+                  <Image source={{ uri: item.listItemImage }} style={styles.listItemImage} />
                   <View style={styles.listText}>
                     <Text>{item.title}</Text>
                   </View>
@@ -212,13 +212,13 @@ const styles = StyleSheet.create({
     height: '40%',
   },
   image: {
-    width: 350,
-    height: 270,
+    width: 320,
+    height: 250,
     resizeMode: 'cover',
     borderRadius: 20,
   },
   categoryContainer: {
-    paddingTop: 15,
+    paddingTop: 13,
   },
   buttonContainer: {
     flexDirection: 'row',

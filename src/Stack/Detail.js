@@ -1,14 +1,17 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import axios from 'axios'
 const emptyHeartIcon = require('./empty_heart.png')
 const filledHeartIcon = require('./filled_heart.png')
 const saveIcon = require('./save.png')
 
-const Detail = () => {
+const Detail = ({route}) => {
     const [isLiked, setIsLiked] = useState(false)
     const navigation = useNavigation()
     const [selectedMenu, setSelectedMenu] = useState('Details'); //초기에는 'Details'
+    const [locationText, setLocationText] = useState('')
+    const [details, setDetails] = useState([]);
 
     const toggleLike = () => {
         setIsLiked(!isLiked)
@@ -43,55 +46,82 @@ const Detail = () => {
         }, [isLiked])
     );
 
+    // Location API
+    useEffect(() => {
+        console.log('Location:', route.params?.location);
+        setLocationText(route.params?.location || '');
+      }, [route.params?.location]);       
+
+    //Details Content API
+    useEffect(() => {
+      const keyword = encodeURIComponent(route.params?.location); //아래 url에서 띄어쓰기가 포함된 것도 keyword로 사용할 수 있도록 함 
+
+      const fetchData = async () => {
+        try {
+          // API 호출
+          const response = await axios.get(
+            `http://apis.data.go.kr/B551011/EngService1/searchKeyword1?ServiceKey=n2%2FFPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69%2BgM7AIokqvH6opUKYrGg%3D%3D&arrange=O&contentTypeId=76&keyword=${keyword}&MobileOS=AND&MobileApp=doumee&_type=json`
+          );
+
+          // 받아온 데이터를 사용하여 주소, 전화번호, 숙소명을 설정
+          const items = response.data.response.body.items.item;
+          if (items) {  // items가 존재하면 map 함수를 실행
+            const newData = items.map((item) => ({
+              detailsAddr: item.addr1,
+              detailsTel: item.tel,
+              detailsImage: item.firstimage , //location image 자리에 잠시 사용해봄
+            }));
+
+            setDetails(newData);
+          } else {
+            console.log('No items found');
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+
+     fetchData();
+    }, []);
+    
     const renderContent = () => {
         if (selectedMenu === 'Details') {
-            return (
-                <View style={styles.content}>
-                <Text>Details Content</Text>
+          return (
+            <View style={styles.content}>
+              {details.map((item, index) => (
+                <View key={index}>
+                  <Text style={{ fontWeight: 'bold' }}>Address</Text>
+                  <Text>{item.detailsAddr}{'\n'}</Text>
+                  <Text style={{ fontWeight: 'bold' }}>Phone</Text>
+                  <Text>{item.detailsTel}</Text>
                 </View>
-            )
-        } else if (selectedMenu === 'Information') {
-            return (
-                <View style={styles.content}>
-                    <Text>Information Content</Text>
-                </View>
-            )
-        } else if (selectedMenu === 'Restaurant') {
-            return (
-                <View style={styles.content}>
-                    <Text>Restaurant Content</Text>
-                </View>
-            )
-        }
-    }
-    return (
-        <View style={styles.container}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <Image
-                    source={require('./haeundae1.png')}
-                    style={styles.image}
-                />
-                <Image
-                    source={require('./haeundae2.png')}
-                    style={styles.image}
-                />
-                <Image
-                    source={require('./haeundae3.png')}
-                    style={styles.image}
-                />
-                <Image
-                    source={require('./haeundae4.png')}
-                    style={styles.image}
-                />
-                <Image
-                    source={require('./haeundae5.png')}
-                    style={styles.image}
-                />
-            </ScrollView>
-
-            <View style={styles.locationContainer}>
-                <Text style={styles.location}>Haeundae - Busan</Text>
+              ))}
             </View>
+          );
+        } else if (selectedMenu === 'Information') {
+          return (
+            <View style={styles.content}>
+              <Text>Information Content</Text>
+            </View>
+          );
+        } else if (selectedMenu === 'Stay') {
+          return (
+            <View style={styles.content}>
+              <Text>Stay Content</Text>
+            </View>
+          );
+        }
+      };   
+
+    return (
+        <View style={styles.container}>  
+            {details.map((item, index) => ( 
+          <Image key={index} source={{ uri: item.detailsImage }} style={styles.image} />
+        ))}
+          
+        <View style={styles.locationContainer}>
+            <Text style={styles.location}>{locationText}</Text>
+        </View>
 
         <View style={styles.menuContainer}>
             <TouchableOpacity onPress={() => setSelectedMenu('Details')}>
@@ -100,8 +130,8 @@ const Detail = () => {
             <TouchableOpacity onPress={() => setSelectedMenu('Information')}>
                <Text style={[styles.menuText, selectedMenu === 'Information' && styles.selectedMenu]}>Information</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setSelectedMenu('Restaurant')}>
-               <Text style={[styles.menuText, selectedMenu === 'Restaurant' && styles.selectedMenu]}>Restaurant</Text>
+            <TouchableOpacity onPress={() => setSelectedMenu('Stay')}>
+               <Text style={[styles.menuText, selectedMenu === 'Stay' && styles.selectedMenu]}>Stay</Text>
             </TouchableOpacity>
         </View>
     {renderContent()} 
@@ -135,33 +165,36 @@ const styles = StyleSheet.create({
         width: 260,
         height: 280,
         borderRadius: 15, // 둥근 모서리 적용
-        marginStart: 50,
-        marginHorizontal: -10,
+        marginStart: 10,
     },
     locationContainer: {
         position: 'absolute',
-        bottom: 260,
+        bottom: 260, 
         left: 20,
     },
     location: {
         fontWeight: 'bold',
         fontSize: 20,
-        marginStart: 5,
+        top: 9,
+        marginStart: 7,
+        marginBottom: -15,
     },
     content: {
-        marginBottom: 110,
+       top: 55,
+        marginBottom: 100,
     },
     menuContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 80,
+        top: 80,
+        marginBottom: 60,
         paddingHorizontal: 10,
     },
     menuText: {
         fontSize: 18,
-        marginStart:18,
-        marginEnd:18,
-        marginLeft: 23,
+        marginStart:34,
+        marginEnd:28,
+        marginLeft: 38,
         paddingBottom: 6,
     },
     selectedMenu: {

@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
     },
     content: {
        top: 55,
+       marginRight: 65,
         marginBottom: 100,
     },
     menuContainer: {

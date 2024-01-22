@@ -33,7 +33,7 @@ const NewPost = () => {
       setContent([{ type: 'text', value: '' }]);
     }
   }, []);
-
+  
   const onChangeText = (text, index) => {
     const updatedContent = [...content];
     updatedContent[index] = { ...updatedContent[index], value: text };

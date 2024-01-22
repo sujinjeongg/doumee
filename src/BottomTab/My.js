@@ -9,13 +9,7 @@ const My = () => {
   const [folderName, setFolderName] = useState('');
   const [folderImage, setFolderImage] = useState(null);
 
-  const folders = [
-    { name: 'Busan -', items: 2, image: require('./Busan.png') },
-    { name: 'Incheon -', items: 3, image: require('./Incheon.png') },
-    { name: 'Seoul -', items: 1, image: require('./Seoul.png') },
-    { name: 'Daegu -', items: 3, image: require('./Daegu.png') },
-    { name: 'Gyeongju -', items: 2, image: require('./Gyeongju.png') },
-  ];
+  const [folders, setFolders] = useState([])
 
   const posts = [
     { id: 1, image: require('./Gyeongju.png'), text: 'Happy moments in Gyeongju' },
@@ -52,12 +46,12 @@ const My = () => {
     const newFolder = {
       name: folderName,
       image: folderImage,
-      items: 0, // initialize the number of items in the folder here
     };
 
     setModalVisible(false);
     setFolderName('');
     setFolderImage(null);
+    setFolders([...folders, newFolder]);
   };
 
   return (
@@ -110,8 +104,8 @@ const My = () => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.folderList}>
         {folders.map((folder, index) => (
           <TouchableOpacity key={index} style={styles.folderItem} onPress={() => navigation.navigate('MyPlan')}>
-            <Image source={folder.image} style={styles.folderImage} />
-            <Text style={styles.folderInfo}>{`${folder.name} ${folder.items} items`}</Text>
+             <Image source={typeof folder.image === 'string' ? { uri: folder.image } : folder.image} style={styles.folderImage} />
+            <Text style={styles.folderInfo}>{`${folder.name}`}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>

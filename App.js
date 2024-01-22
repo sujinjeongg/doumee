@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -17,13 +17,18 @@ import Post3 from './src/Stack/Post3';
 import Post4 from './src/Stack/Post4';
 import Post5 from './src/Stack/Post5';
 import Search from './src/Stack/Search';
+import { DataProvider } from './src/Stack/DataContext';
 
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator()
 
 export default function App() {
+
+  const [data, setData] = useState([]);
+
   return (
+    <DataProvider value={{ data, setData }}>
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -59,6 +64,7 @@ export default function App() {
         <Tab.Screen name='My' component={MyStackNavigator} />
       </Tab.Navigator>
     </NavigationContainer>
+    </DataProvider>
   );
 }
 

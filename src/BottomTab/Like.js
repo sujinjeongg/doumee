@@ -1,21 +1,16 @@
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, Modal } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
+import DataContext from '../Stack/DataContext';
 
 
 
 const Like = () => {
 
   const navigation = useNavigation()
-
-  const [data, setData] = useState([
-    { id: '1', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Myeong-dong, Seoul' },
-    { id: '2', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Song-do, Incheon' },
-    { id: '3', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Haeundae, Busan' },
-    { id: '4', imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',text: 'Gyeongju' },
-  ]);
+  const { data } = useContext(DataContext);
 
   const handleDeleteItem = id => {
     setData(data.filter(item => item.id !== id));
@@ -47,10 +42,10 @@ const Like = () => {
             </View>
           </View>
           <View style={styles.boxContainer}>
-            <FlatList data={data} numColumns={2} keyExtractor={item => item.id}
+            <FlatList data={data} numColumns={2} keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => (
               <TouchableOpacity onLongPress={() => handleLongPressItem(item.id)}  style={styles.box}>
-                  <Image source={{ uri: item.imageUrl }} style={styles.image} />
+                  <Image source={item.imageUrl ? { uri: item.imageUrl } : require('./Seoul.png')} style={styles.image} />
                   <Text style={styles.text}>{item.text}</Text>
                   <TouchableOpacity onPress={() => navigation.navigate('Detail')} style={styles.icon}>
                     <Icon name="chevron-forward" size={24} color="blue"/>

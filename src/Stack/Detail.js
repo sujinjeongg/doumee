@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import axios from 'axios'
 const emptyHeartIcon = require('./empty_heart.png')
 const filledHeartIcon = require('./filled_heart.png')
 const saveIcon = require('./save.png')
+import DataContext from './DataContext';
+
 
 const Detail = ({route}) => {
     const [isLiked, setIsLiked] = useState(false)
@@ -12,9 +14,20 @@ const Detail = ({route}) => {
     const [selectedMenu, setSelectedMenu] = useState('Details'); //초기에는 'Details'
     const [locationText, setLocationText] = useState('')
     const [details, setDetails] = useState([]);
+    const { data, setData } = useContext(DataContext);
 
     const toggleLike = () => {
-        setIsLiked(!isLiked)
+      setIsLiked(!isLiked);
+  
+      if (!isLiked) {
+        // Like 상태가 아니었을 때, 즉 Like 버튼을 눌렀을 때만 데이터를 전달합니다.
+        const newData = {
+          id: (data.length + 1).toString(), // id는 data.length + 1로 설정합니다.
+          imageUrl: details[0]?.detailsImage, // 화면에 표시되고 있는 이미지 URL
+          text: locationText, // Location text
+        };
+        setData(prevData => [...prevData, newData]);  // setData를 사용하여 data를 업데이트합니다.
+      }
     };
 
     const handleSave = () => {
@@ -43,7 +56,7 @@ const Detail = ({route}) => {
                     </View>
                 ),
             });
-        }, [isLiked])
+        }, [isLiked, details, locationText])
     );
 
     // Location API
@@ -55,14 +68,14 @@ const Detail = ({route}) => {
     //Details Content API
     useEffect(() => {
       const keyword = encodeURIComponent(route.params?.location); //아래 url에서 띄어쓰기가 포함된 것도 keyword로 사용할 수 있도록 함 
-
+    
       const fetchData = async () => {
         try {
           // API 호출
           const response = await axios.get(
             `http://apis.data.go.kr/B551011/EngService1/searchKeyword1?ServiceKey=n2%2FFPg6H7Z52OAEFmtjTXCKNBHBZ08uUGljVTQWijKC6GeuQTWMSEzDB8XwQbIIE69%2BgM7AIokqvH6opUKYrGg%3D%3D&arrange=O&contentTypeId=76&keyword=${keyword}&MobileOS=AND&MobileApp=doumee&_type=json`
           );
-
+    
           // 받아온 데이터를 사용하여 주소, 전화번호, 숙소명을 설정
           const items = response.data.response.body.items.item;
           if (items) {  // items가 존재하면 map 함수를 실행
@@ -71,7 +84,7 @@ const Detail = ({route}) => {
               detailsTel: item.tel,
               detailsImage: item.firstimage , //location image 자리에 잠시 사용해봄
             }));
-
+    
             setDetails(newData);
           } else {
             console.log('No items found');
@@ -80,8 +93,8 @@ const Detail = ({route}) => {
           console.error('Error fetching data:', error);
         }
       };
-
-     fetchData();
+    
+      fetchData();
     }, []);
     
     const renderContent = () => {

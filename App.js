@@ -15,7 +15,6 @@ import Search from './src/Stack/Search';
 import PostDetail from './src/Stack/PostDetail';
 import { DataProvider } from './src/Stack/DataContext';
 
-
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator()
 

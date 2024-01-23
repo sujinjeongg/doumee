@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     searchInput: {
         height: 45,
         flex: 1,
-        paddingLeft: 15,
+        paddingLeft: 11,
         fontSize: 16,
     },
     searchIcon: {
@@ -93,27 +93,29 @@ const styles = StyleSheet.create({
     },
     resultContainer: {
       margin: 10,
+      marginLeft: 10,
+      marginRight: 10,
       backgroundColor: '#fff',
       borderRadius: 10,
-      padding: 10,
+      padding: -15,
       borderWidth: 1,
       borderColor: '#ddd',
     },
     title: {
       fontSize: 18, 
       fontWeight: 'bold',
-      marginHorizontal: 5,
+      marginHorizontal: 3,
     },
     text: {
       marginVertical: 7,
-      marginHorizontal: 5,
+      marginHorizontal: 3,
     },
     image: {
-      width: 330, 
+      width: 315, 
       height: 200,
-      margin: 10,
+      margin: 7,
       borderRadius: 10,
-      marginLeft: 20,
+      marginLeft: 10,
     },
 });
 

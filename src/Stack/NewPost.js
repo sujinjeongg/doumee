@@ -6,7 +6,7 @@ import SaveIcon from './check.png'
 import GalleryIcon from './gallery.png'
 import TrashIcon from './trash.png'
 
-const NewPost = ({ route }) => {
+const NewPost = ({ route}) => {
   const navigation = useNavigation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState([]);
@@ -61,17 +61,13 @@ const NewPost = ({ route }) => {
       content: content,
       image: selectedImages.length > 0 ? selectedImages[0] : null,
     };
-  
+
     // Call the addNewPost function passed as a parameter from the My component
     addNewPost(newPost);
-  
-    // You can choose to navigate to My screen immediately after adding the post
-    // navigation.navigate('My', { postImage: selectedImages.length > 0 ? selectedImages[0] : null });
-  
-    // OR you can simply go back to the previous screen
-    navigation.goBack();
+
+    // Navigate to PostDetail with the new post information
+    navigation.navigate('PostDetail', { post: newPost });
   };
-  
   
 
   const removeImage = (indexToRemove) => {

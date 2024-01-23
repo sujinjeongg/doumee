@@ -57,8 +57,8 @@ const My = ({route}) => {
     if (postImage) {
       // Create a new post object with the received postImage
       const newPost = {
-        title: '', // You might want to set an appropriate title
-        content: [], // You might want to set appropriate content
+        title: '', 
+        content: [], 
         image: postImage,
       };
   
@@ -125,26 +125,25 @@ const My = ({route}) => {
 
       <View style={styles.recordeditList}>
       <Text style={styles.recordText}>Record</Text>  
-      <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('NewPost', { addNewPost })}>
+      <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('NewPost', { addNewPost: addNewPost })}>
         <Image source={require('./edit.png')} style={styles.editImage} />
       </TouchableOpacity>
       </View>    
 
     <View style={styles.postList}>
-      <ScrollView contentContainerStyle={styles.postListContent}>
+    <ScrollView contentContainerStyle={styles.postListContent}>
         {posts.map((post, index) => (
-          <TouchableOpacity key={index} onPress={() => navigation.navigate(`Post${index}`)} activeOpacity={0.9}>
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('PostDetail', { post })} activeOpacity={0.9}>
             <View style={styles.postContainer}>
-  <View style={styles.postContent}>
-    {post.image && (
-      <Image source={{ uri: typeof post.image === 'string' ? post.image : post.image.uri }} style={styles.postImage} />
-    )}
-    <Text style={styles.postText}>{post.title}</Text>
-  </View>
-</View>
-
+              <View style={styles.postContent}>
+                {post.image && (
+                  <Image source={{ uri: typeof post.image === 'string' ? post.image : post.image.uri }} style={styles.postImage} />
+                )}
+                <Text style={styles.postText}>{post.title}</Text>
+              </View>
+            </View>
           </TouchableOpacity>
-       ))}
+        ))}
       </ScrollView>
       </View>
     </View>

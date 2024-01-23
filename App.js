@@ -11,12 +11,8 @@ import My from './src/BottomTab/My';
 import Detail from './src/Stack/Detail';
 import MyPlan from './src/Stack/MyPlan';
 import NewPost from './src/Stack/NewPost';
-import Post1 from './src/Stack/Post1';
-import Post2 from './src/Stack/Post2';
-import Post3 from './src/Stack/Post3';
-import Post4 from './src/Stack/Post4';
-import Post5 from './src/Stack/Post5';
 import Search from './src/Stack/Search';
+import PostDetail from './src/Stack/PostDetail';
 import { DataProvider } from './src/Stack/DataContext';
 
 
@@ -94,11 +90,7 @@ function MyStackNavigator() {
     <Stack.Screen name='Detail' component={Detail} />
     <Stack.Screen name='MyPlan' component={MyPlan} />
     <Stack.Screen name="NewPost" component={NewPost} />
-    <Stack.Screen name="Post1" component={Post1} />
-    <Stack.Screen name="Post2" component={Post2} />
-    <Stack.Screen name="Post3" component={Post3} />
-    <Stack.Screen name="Post4" component={Post4} />
-    <Stack.Screen name="Post5" component={Post5} />
+    <Stack.Screen name="PostDetail" component={PostDetail} />
   </Stack.Navigator> 
     );
 }

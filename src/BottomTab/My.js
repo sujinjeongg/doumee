@@ -1,23 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Modal, TextInput, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker'
 
-const My = () => {
+const My = ({route}) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [folderName, setFolderName] = useState('');
   const [folderImage, setFolderImage] = useState(null);
-
-  const [folders, setFolders] = useState([])
-
-  const posts = [
-    { id: 1, image: require('./Gyeongju.png'), text: 'Happy moments in Gyeongju' },
-    { id: 2, image: require('./Seoul.png'), text: 'What a beautiful city, Seoul' },
-    { id: 3, image: require('./Busan.png'), text: 'Lovely Busan' },
-    { id: 4, image: require('./Incheon.png'), text: 'Travel in Incheon' },
-    { id: 5, image: require('./Daegu.png'), text: 'Memories in Daegu' },
-  ];
+  const [folders, setFolders] = useState([]);
+  const [posts, setPosts] = useState([]); // Add this state for storing posts
 
   const openImagePicker = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -54,6 +46,27 @@ const My = () => {
     setFolders([...folders, newFolder]);
   };
 
+  const addNewPost = (newPost) => {
+    setPosts([...posts, newPost]);
+  };
+
+  useEffect(() => {
+    // Receive the postImage parameter from the NewPost component
+    const postImage = route.params?.postImage;
+  
+    if (postImage) {
+      // Create a new post object with the received postImage
+      const newPost = {
+        title: '', // You might want to set an appropriate title
+        content: [], // You might want to set appropriate content
+        image: postImage,
+      };
+  
+      // Add the new post to the posts state
+      setPosts([...posts, newPost]);
+    }
+  }, [route.params?.postImage]);
+  
   return (
 
     <View style={styles.container}>
@@ -112,21 +125,24 @@ const My = () => {
 
       <View style={styles.recordeditList}>
       <Text style={styles.recordText}>Record</Text>  
-      <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('NewPost')}>
+      <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('NewPost', { addNewPost })}>
         <Image source={require('./edit.png')} style={styles.editImage} />
       </TouchableOpacity>
       </View>    
 
     <View style={styles.postList}>
       <ScrollView contentContainerStyle={styles.postListContent}>
-        {posts.map((post) => (
-          <TouchableOpacity key={post.id} onPress={() => navigation.navigate(`Post${post.id}`)} activeOpacity={0.9}>
+        {posts.map((post, index) => (
+          <TouchableOpacity key={index} onPress={() => navigation.navigate(`Post${index}`)} activeOpacity={0.9}>
             <View style={styles.postContainer}>
-              <View style={styles.postContent}>
-              <Image source={post.image} style={styles.postImage} />
-              <Text style={styles.postText}>{post.text}</Text>
-              </View>
-            </View>
+  <View style={styles.postContent}>
+    {post.image && (
+      <Image source={{ uri: typeof post.image === 'string' ? post.image : post.image.uri }} style={styles.postImage} />
+    )}
+    <Text style={styles.postText}>{post.title}</Text>
+  </View>
+</View>
+
           </TouchableOpacity>
        ))}
       </ScrollView>

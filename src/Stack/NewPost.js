@@ -6,12 +6,13 @@ import SaveIcon from './check.png'
 import GalleryIcon from './gallery.png'
 import TrashIcon from './trash.png'
 
-const NewPost = () => {
+const NewPost = ({ route }) => {
   const navigation = useNavigation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const textInputRef = useRef(null); 
+  const { addNewPost } = route.params;
 
   useEffect(() => {
     (async () => {
@@ -55,11 +56,23 @@ const NewPost = () => {
   };
 
   const savePost = () => {
-    // Save post logic here
-    // Include title, content, and selectedImages URIs in the post object
-    // Save the post to the appropriate location (database, state, etc.)
-    navigation.navigate('My');
+    const newPost = {
+      title: title,
+      content: content,
+      image: selectedImages.length > 0 ? selectedImages[0] : null,
+    };
+  
+    // Call the addNewPost function passed as a parameter from the My component
+    addNewPost(newPost);
+  
+    // You can choose to navigate to My screen immediately after adding the post
+    // navigation.navigate('My', { postImage: selectedImages.length > 0 ? selectedImages[0] : null });
+  
+    // OR you can simply go back to the previous screen
+    navigation.goBack();
   };
+  
+  
 
   const removeImage = (indexToRemove) => {
     const updatedContent = content.filter((_, index) => index !== indexToRemove);
